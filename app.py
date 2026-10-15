@@ -146,24 +146,12 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# ---------- Sidebar ----------
-with st.sidebar:
-    st.header("⚙️ Data")
-    up = st.file_uploader("Upload customer CSV (optional)", type=["csv"])
-    st.caption(f"Upload nahi karoge to `{DATA_FILE}` use hoga.")
-    st.divider()
-    st.subheader("Model info")
-    st.write(f"**Clusters:** {N_CLUSTERS}")
-    st.write("**Model features:** " + ", ".join(FEATURES))
-    st.caption("Age sirf insights/charts ke liye dikhai jaati hai, model mein use nahi hoti.")
-
-
 @st.cache_data
 def load_default():
     return pd.read_csv(DATA_FILE)
 
 
-raw = pd.read_csv(up) if up is not None else load_default()
+raw = load_default()
 
 data = None
 missing = [c for c in FEATURES if c not in raw.columns]
